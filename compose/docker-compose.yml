@@ -1,0 +1,23 @@
+version: '3'
+services:
+  angular:
+    image: "veggie-ui:0.0.1"
+    ports:
+      - "4200:4200"
+    external_links:
+      - restapi
+  restapi:
+    image: "veggie-api:0.0.1"
+    ports:
+      - "80:80"
+  mongodb_container:
+    image: "mongo:latest"
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:
+
+    

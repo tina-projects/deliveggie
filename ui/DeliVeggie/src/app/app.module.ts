@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VeggieListComponent } from './veggie/veggie-list/veggie-list.component';
 import { VeggieDetailsComponent } from './veggie/veggie-details/veggie-details.component';
-import {  MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [

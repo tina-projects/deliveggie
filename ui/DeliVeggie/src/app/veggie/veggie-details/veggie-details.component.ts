@@ -16,7 +16,12 @@ export class VeggieDetailsComponent implements OnInit {
     
   ngOnInit(): void {
     let veggieId:number=this._activatedRoute.snapshot.params['Id'];
-    this.veggie=this._veggieService.getVeggieDetails(veggieId);
+//    this.veggie=this._veggieService.getVeggieDetails(veggieId);
+      this._veggieService.getVeggieDetails(veggieId).subscribe((veggieData: IVeggie) =>
+      {
+        this.veggie = veggieData;
+        console.log(this.veggie);
+      });
   }
 
 }

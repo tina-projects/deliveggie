@@ -15,21 +15,25 @@
     </ng-container>
   
     <!-- Name Column -->
-    <ng-container matColumnDef="Name">
+    <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
+      <td mat-cell *matCellDef="let element">
+        <a [routerLink]="['/details',element.id]">
+          {{element.name}} 
+        </a>
+      </td>
     </ng-container>
   
     <!-- EntryDate Column -->
-    <ng-container matColumnDef="EntryDate">
+    <ng-container matColumnDef="entryDate">
       <th mat-header-cell *matHeaderCellDef> EntryDate</th>
-      <td mat-cell *matCellDef="let element"> {{element.EntryDate| date:'dd-MM-yyyy' }} </td>
+      <td mat-cell *matCellDef="let element"> {{element.entryDate| date:'dd-MM-yyyy' }} </td>
     </ng-container>
   
     <!-- Symbol Column -->
-    <ng-container matColumnDef="Price" >
+    <ng-container matColumnDef="price" >
       <th mat-header-cell *matHeaderCellDef> Price </th>
-      <td mat-cell *matCellDef="let element" > {{element.Price}} </td>
+      <td mat-cell *matCellDef="let element" > {{element.price}} </td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>

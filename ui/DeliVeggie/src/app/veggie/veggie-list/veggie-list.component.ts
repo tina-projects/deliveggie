@@ -3,6 +3,7 @@ import { VeggieService } from '../../veggie.service';
 import {IVeggie} from '../models/iveggie';
 import {DatePipe} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
+import {MatTableDataSource} from '@angular/material/table';
 
 
 @Component({
@@ -18,16 +19,23 @@ export class VeggieListComponent implements OnInit {
 
   constructor(private _veggieService:VeggieService) { }
   
-   ELEMENT_DATA: IVeggie[] = this._veggieService.getVeggieList();
+//  ELEMENT_DATA: any = this._veggieService.getVeggieList();
   
-  displayedColumns: string[] = ['Id', 'Name', 'EntryDate', 'Price'];
-  dataSource = this.ELEMENT_DATA;
+  displayedColumns: string[] = ['name', 'entryDate', 'price'];
+  dataSource = new MatTableDataSource<IVeggie>();
  
   ngOnInit(): void {
+    this._veggieService.getVeggieList().subscribe((veggieData: IVeggie[]) =>
+      {
+        this.veggies = veggieData;
+        console.log(this.veggies);
+        this.dataSource =  new MatTableDataSource(this.veggies);
+      });
   }
+
   veggieDetailsByRow(row:any)
   {
-console.log(row);
+    console.log(row["id"]);
   }
 
 }

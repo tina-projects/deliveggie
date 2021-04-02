@@ -17,13 +17,4 @@ export class VeggieService{
   getVeggieDetails(Id:number): Observable<IVeggie> {
       return this._httpClient.get<IVeggie>('http://localhost/Veggie/' + Id);
  }
- // getVeggieList(): IVeggie[] {
- //   return this.veggieList;
-//}
-
- // getVeggieDetails(Id:number): IVeggie{
-
- //   this.veggie.Id=Id;
- //   return this.veggie  
-//}
 }

@@ -37,7 +37,7 @@ namespace DelVeggieAPI
             options.AddPolicy(name: AllowLocalhost,
                               builder =>
                               {
-                                  builder.WithOrigins("http://localhost:4200");
+                                  builder.WithOrigins("*");
                               });
         });
             services.AddControllers();

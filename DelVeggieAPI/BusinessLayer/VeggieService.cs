@@ -25,7 +25,7 @@ namespace DelVeggieAPI.BusinessLayer
 
         public List<Veggie> GetVeggieList()
         {
-            double priceReduction= _priceReductionService.GetPriceReduction();
+            double priceReduction = _priceReductionService.GetPriceReduction();
             List<Veggie> veggieList = _veggie.Find(veggie =>true).ToList();
             veggieList.ForEach(v => v.Price = v.Price * priceReduction);
             return veggieList;

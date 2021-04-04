@@ -18,6 +18,8 @@ namespace DelVeggieConsoleApp.BusinessLayer
             var client = DbConnection.GetInstance().GetDbClient();
             var database = client.GetDatabase("DeliVeggie");
             _priceReductions = database.GetCollection<PriceReductions>("PriceReductions");
+            Console.WriteLine("Getting PriceReductions");
+            _reductionList = _priceReductions.Find(priceReductions =>true).ToList();
 
         }
 

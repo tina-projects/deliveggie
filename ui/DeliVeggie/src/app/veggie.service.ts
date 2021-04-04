@@ -12,9 +12,9 @@ export class VeggieService{
   constructor(private _httpClient:HttpClient) { }
 
   getVeggieList(): Observable<IVeggie[]> {
-      return this._httpClient.get<IVeggie[]>('http://localhost/Veggie');  
+      return this._httpClient.get<IVeggie[]>('https://localhost:5001/Veggie');  
   }
   getVeggieDetails(Id:number): Observable<IVeggie> {
-      return this._httpClient.get<IVeggie>('http://localhost/Veggie/' + Id);
+      return this._httpClient.get<IVeggie>('https://localhost:5001/Veggie/' + Id);
  }
 }

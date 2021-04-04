@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using EasyNetQ;
 using EasyNetQ.Topology;
+using Newtonsoft.Json;
 using DelVeggieAPI.BusinessLayer;
 
 namespace DelVeggieAPI.Controllers 
@@ -24,8 +25,10 @@ namespace DelVeggieAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Veggie> Get()
+        public async Task<IEnumerable<Veggie>> Get()
         {
+            bool isMessageReturned = false;
+            List<Veggie> veggieList = new List<Veggie>();
             var bus = RabbitHutch.CreateBus("host=192.168.99.100:5672,timeout=120").Advanced;
             var correlationId = Guid.NewGuid().ToString();
             var message = new Message<String>(correlationId);
@@ -38,18 +41,64 @@ namespace DelVeggieAPI.Controllers
 
             // Read Response
             var responseQueue = bus.QueueDeclare(correlationId);
-            bus.Consume<List<Veggie>>(responseQueue, (resp,info) =>{
-                Console.WriteLine(resp.Body);
+            bus.Consume<string>(responseQueue, (resp,info) =>{
+                try
+                {
+                    veggieList = JsonConvert.DeserializeObject<List<Veggie>>(resp.Body);
+                }
+                catch (System.Exception e)
+                {
+                    
+                    Console.WriteLine(e);
+                }
+                isMessageReturned = true;
+                Console.WriteLine("Message Returned");
             });
-            return new List<Veggie>();
-   //         List<Veggie> veggieList = this._veggieService.GetVeggieList();
-   //         return veggieList;
+
+            while (!isMessageReturned)
+            {
+                Console.WriteLine("Waiting for message return");
+                await Task.Delay(50);
+            }
+            return veggieList;
         }
 
         [HttpGet("{id:length(24)}")]
-        public Veggie Get(string Id)
+        public async Task<Veggie> Get(string Id)
         {
-            Veggie veggie =this._veggieService.GetVeggie(Id);
+            bool isMessageReturned = false;
+            Veggie veggie = new Veggie();
+            var bus = RabbitHutch.CreateBus("host=192.168.99.100:5672,timeout=120").Advanced;
+            var correlationId = Guid.NewGuid().ToString();
+            var message = new Message<String>(correlationId + "," + Id);
+
+            // Request Queue
+            var queue = bus.QueueDeclare("veggieDetails.request");
+            var exchange = bus.ExchangeDeclare("Veggie.Exchange", ExchangeType.Direct);
+            var binding = bus.Bind(exchange, queue, "veggieDetails.request");
+            bus.Publish(exchange, "veggieDetails.request", false, message);
+
+            // Read Response
+            var responseQueue = bus.QueueDeclare(correlationId);
+            bus.Consume<string>(responseQueue, (resp,info) =>{
+                try
+                {
+                    veggie = JsonConvert.DeserializeObject<Veggie>(resp.Body);
+                }
+                catch (System.Exception e)
+                {
+                    
+                    Console.WriteLine(e);
+                }
+                isMessageReturned = true;
+                Console.WriteLine("Message Returned");
+            });
+
+            while (!isMessageReturned)
+            {
+                Console.WriteLine("Waiting for message return");
+                await Task.Delay(50);
+            }
             return veggie;
         }
     }

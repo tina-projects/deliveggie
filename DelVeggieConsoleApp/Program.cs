@@ -11,8 +11,26 @@ namespace DelVeggieConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            var bus = RabbitHutch.CreateBus("host=192.168.99.100:5672").Advanced;
+            Console.WriteLine("Veggie Queue Starting...");
+            var connected = false;
+            IAdvancedBus bus = null;
+            while (!connected)
+            {
+                try
+                {
+                    if (bus == null) 
+                    {
+                        bus = RabbitHutch.CreateBus("host=rabbitmq:5672").Advanced;
+                    }
+                    var testQueue = bus.QueueDeclare("veggie.test");
+                    connected = true;
+                    Console.WriteLine("Connected to Test Queue");
+                }
+                catch (System.Exception)
+                {
+                    Console.WriteLine("Could not connect to queue. Retrying...");
+                }
+            }
 
             //VeggieList Queue
             var queue = bus.QueueDeclare("veggie.request");

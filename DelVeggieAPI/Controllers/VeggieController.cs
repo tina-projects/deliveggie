@@ -26,7 +26,7 @@ namespace DelVeggieAPI.Controllers
         {
             bool isMessageReturned = false;
             List<Veggie> veggieList = new List<Veggie>();
-            var bus = RabbitHutch.CreateBus("host=192.168.99.100:5672,timeout=120").Advanced;
+            var bus = RabbitHutch.CreateBus("host=rabbitmq:5672,timeout=120").Advanced;
             var correlationId = Guid.NewGuid().ToString();
             var message = new Message<String>(correlationId);
 
@@ -65,7 +65,7 @@ namespace DelVeggieAPI.Controllers
         {
             bool isMessageReturned = false;
             Veggie veggie = new Veggie();
-            var bus = RabbitHutch.CreateBus("host=192.168.99.100:5672,timeout=120").Advanced;
+            var bus = RabbitHutch.CreateBus("host=rabbitmq:5672,timeout=120").Advanced;
             var correlationId = Guid.NewGuid().ToString();
             var message = new Message<String>(correlationId + "," + Id);
 

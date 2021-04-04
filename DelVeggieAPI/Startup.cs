@@ -12,8 +12,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
-using DelVeggieAPI.Models;
-using DelVeggieAPI.BusinessLayer;
 using Microsoft.Extensions.Options;
 
 namespace DelVeggieAPI
@@ -41,10 +39,6 @@ namespace DelVeggieAPI
                               });
         });
             services.AddControllers();
-            services.AddScoped<IVeggieService,VeggieService>();
-            services.Configure<DeliVeggieDatabaseSettings>(Configuration.GetSection(nameof(DeliVeggieDatabaseSettings)));
-            services.AddSingleton<IDeliVeggieDatabaseSettings>(sp=>sp.GetRequiredService<IOptions<DeliVeggieDatabaseSettings>>().Value);   
-            services.AddSingleton<IPriceReductionsService, PriceReductionsService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DelVeggieAPI", Version = "v1" });

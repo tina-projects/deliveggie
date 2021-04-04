@@ -7,7 +7,6 @@ using System;
 using EasyNetQ;
 using EasyNetQ.Topology;
 using Newtonsoft.Json;
-using DelVeggieAPI.BusinessLayer;
 
 namespace DelVeggieAPI.Controllers 
 {
@@ -16,12 +15,10 @@ namespace DelVeggieAPI.Controllers
    public class VeggieController : ControllerBase
     {
         private readonly ILogger<VeggieController> _logger;
-        private readonly IVeggieService _veggieService;
 
-        public VeggieController(ILogger<VeggieController> logger, IVeggieService veggieService)
+        public VeggieController(ILogger<VeggieController> logger)
         {
             _logger = logger;
-            _veggieService=veggieService;
         }
 
         [HttpGet]

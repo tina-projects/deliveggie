@@ -10,6 +10,16 @@ services:
     image: "veggie-api:0.0.1"
     ports:
       - "80:80"
+  consoleapp:
+    image: "veggie-console:0.0.1"
+    restart: "always"
+    depends_on:
+      - "rabbitmq"
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - 5672:5672
+      - 15672:15672
   mongodb_container:
     image: "mongo:latest"
     ports:

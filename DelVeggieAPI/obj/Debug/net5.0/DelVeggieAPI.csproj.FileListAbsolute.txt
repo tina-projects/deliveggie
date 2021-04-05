@@ -44,3 +44,6 @@ D:\projects\deliveggie\DelVeggieAPI\bin\Debug\net5.0\runtimes\win\native\snappy6
 D:\projects\deliveggie\DelVeggieAPI\bin\Debug\net5.0\runtimes\linux\native\libmongocrypt.so
 D:\projects\deliveggie\DelVeggieAPI\bin\Debug\net5.0\runtimes\osx\native\libmongocrypt.dylib
 D:\projects\deliveggie\DelVeggieAPI\bin\Debug\net5.0\runtimes\win\native\mongocrypt.dll
+D:\projects\deliveggie\DelVeggieAPI\bin\Debug\net5.0\EasyNetQ.dll
+D:\projects\deliveggie\DelVeggieAPI\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\projects\deliveggie\DelVeggieAPI\bin\Debug\net5.0\RabbitMQ.Client.dll

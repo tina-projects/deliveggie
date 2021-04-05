@@ -4,23 +4,23 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using DelVeggieConsoleApp.DAL;
 
-namespace DelVeggieAPI.BusinessLayer
+namespace DelVeggieConsoleApp.BusinessLayer
 {
-    public class PriceReductionsService:IPriceReductionsService
+    public class PriceReductionsService
     {
-        private readonly ILogger<PriceReductionsService> _logger;
         private readonly IMongoCollection<PriceReductions> _priceReductions;
         private List<PriceReductions> _reductionList;
 
-        public PriceReductionsService(ILogger<PriceReductionsService> logger, IDeliVeggieDatabaseSettings settings)
+        public PriceReductionsService()
         {
-            _logger = logger;
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-            _priceReductions = database.GetCollection<PriceReductions>(settings.PriceReductionsCollectionName);
+            var client = DbConnection.GetInstance().GetDbClient();
+            var database = client.GetDatabase("DeliVeggie");
+            _priceReductions = database.GetCollection<PriceReductions>("PriceReductions");
             Console.WriteLine("Getting PriceReductions");
             _reductionList = _priceReductions.Find(priceReductions =>true).ToList();
+
         }
 
         public double GetPriceReduction()

@@ -20,7 +20,7 @@ namespace DelVeggieConsoleApp
                 {
                     if (bus == null) 
                     {
-                        bus = RabbitHutch.CreateBus("host=rabbitmq:5672").Advanced;
+                        bus = RabbitHutch.CreateBus("host=rabbitmq:5672, timeout=120").Advanced;
                     }
                     var testQueue = bus.QueueDeclare("veggie.test");
                     connected = true;
